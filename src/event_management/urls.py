@@ -16,8 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+
+app_name = "event_management"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/events/", include("events.urls", namespace="events")),
+    path("api/v1/users", include("users.urls", namespace="users")),
 ]
