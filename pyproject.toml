@@ -11,6 +11,7 @@ dependencies = [
     "djangorestframework-simplejwt>=5.5.0",
     "drf-spectacular>=0.28.0",
     "pre-commit>=4.2.0",
+    "pydantic-settings>=2.9.0",
 ]
 
 [dependency-groups]

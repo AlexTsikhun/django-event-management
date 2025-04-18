@@ -7,6 +7,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from events.filters import EventFilter
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from event_management import settings
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -30,6 +33,19 @@ class EventViewSet(viewsets.ModelViewSet):
             )
 
         registration = EventRegistration.objects.create(event=event, user=request.user)
+
+        subject = f"Registration Confirmation for {event.title}"
+        html_message = render_to_string(
+            "email/registration_confirmation.html",
+            {"user": request.user, "event": event},
+        )
+        send_mail(
+            subject,
+            "",
+            settings.EMAIL_HOST_USER,
+            [request.user.email],
+            html_message=html_message,
+        )
 
         return Response(
             EventRegistrationSerializer(registration).data,
