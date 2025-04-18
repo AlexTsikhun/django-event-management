@@ -33,7 +33,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 # Reset the entrypoint, don't invoke `uv`
 ENTRYPOINT []
-
-
-CMD sh -c "pwd && ls -l && python src/manage.py runserver 0.0.0.0:8001"
-
+CMD sh -c "python manage.py migrate && python src/manage.py runserver 0.0.0.0:8001"
